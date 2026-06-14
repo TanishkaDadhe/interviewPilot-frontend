@@ -241,6 +241,15 @@ export default function DashboardPage() {
         `/interview/${response.data.session_id}`
       );
     } catch (error: any) {
+
+      if (error.response?.status === 429) {
+        alert(
+          error.response?.data?.detail ||
+          "AI service quota is finished for the day. Please try again later after 24 hours."
+        );
+        return;
+      }
+
       alert(
         error.response?.data?.detail ||
         "Failed to start interview"
@@ -261,7 +270,7 @@ export default function DashboardPage() {
 
 
   return (
-    <div className="min-h-screen bg-[#0b1326] text-white">
+    <div className="min-h-screen bg-[#060D1F] text-white">
       <Sidebar />
 
       <div className="ml-[280px]">
@@ -269,12 +278,11 @@ export default function DashboardPage() {
 
         <main className="p-8 pt-24">
           <div className="mb-8">
-            <h1 className="text-5xl font-bold">
-              Welcome back, {user?.name || "Candidate"} 👋
+            <h1 className="text-4xl font-bold tracking-tight">
+              Ready for your next Interview {user?.name || "Candidate"}?
             </h1>
-
-            <p className="text-slate-400 mt-2">
-              You're in the top 5% of candidates this week.
+            <p className="text-slate-500 mt-2">
+              Get personalized insights and actionable feedback to accelerate your growth.
             </p>
           </div>
 
