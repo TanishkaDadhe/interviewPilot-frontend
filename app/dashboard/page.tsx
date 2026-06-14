@@ -201,13 +201,15 @@ export default function DashboardPage() {
           setResumeUploaded(true);
         }
 
-      } catch (error) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user_id");
-        localStorage.removeItem("user_name");
+      } catch (error: any) {
+      console.error("DASHBOARD ERROR:", error);
 
-        router.push("/login");
-      }
+      alert(
+        error?.response?.data?.detail ||
+        error?.message ||
+        "Dashboard fetch failed"
+      );
+    }
     };
 
     fetchUser();
